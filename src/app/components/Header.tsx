@@ -19,7 +19,7 @@ const NavLink = ({ title, link, isFilled }: NavLinkProps) => (
 	<li
 		className={`${
 			isFilled && 'bg-black'
-		} p-3 px-6 rounded-full h-fit hidden md:flex justify-center items-center`}>
+		} md:py-2 lg:p-3 md:px-4 lg:px-6 rounded-full h-fit hidden md:flex justify-center items-center`}>
 		<Link
 			className={`${
 				isFilled ? 'text-white' : 'text-black'
@@ -33,13 +33,13 @@ const NavLink = ({ title, link, isFilled }: NavLinkProps) => (
 
 const SearchBox = () => (
 	<>
-		<HiSearch className='text-xl text-gray-500 sm:hidden' />
-		<div className='bg-[#e9e9e9] py-2 px-6 gap-3 items-center rounded-full w-full hidden sm:flex h-fit'>
-			<HiSearch className='text-3xl  text-gray-500' />
+		<HiSearch className='text-3xl text-gray-500 sm:hidden' />
+		<div className='bg-[#e9e9e9] sm:py-1 lg:p-2 sm:px-4 lg:px-6 sm:gap-1 md:gap-2 lg:gap-3 items-center rounded-full w-full hidden sm:flex h-fit'>
+			<HiSearch className='sm: text-xl md:text2xl lg:text-3xl  text-gray-500' />
 			<input
 				type='text'
 				placeholder='Search'
-				className='bg-transparent outline-none w-full text-xl'
+				className='bg-transparent outline-none w-full min-w-[150px] text-xl'
 			/>
 		</div>
 	</>
@@ -64,22 +64,22 @@ const Header = () => {
 	}, [session, db])
 
 	return (
-		<header className='py-2 px-4 flex gap-3 md:gap-2 justify-between items-center'>
+		<header className='py-2 px-4 flex gap-3 md:gap-6 justify-between items-center'>
 			<Logo />
 
 			<nav className='flex-1 flex gap-3 items-center justify-end'>
-				<ul className='flex gap-2'>
+				<ul className='flex gap-1 lg:gap-2'>
 					<NavLink title='Home' link='/' isFilled />
 					<NavLink title='Explore' link='/explore' />
 					<NavLink title='Create' link='/create' />
 				</ul>
 
 				<SearchBox />
-				<HiBell className='text-2xl md:text-5xl text-gray-500 cursor-pointer' />
-				<HiChat className='text-2xl md:text-5xl text-gray-500 cursor-pointer' />
+				<HiBell className='text-3xl md:text-6xl text-gray-500 cursor-pointer' />
+				<HiChat className='text-3xl md:text-6xl text-gray-500 cursor-pointer' />
 				<Link
-					href={`/user/${session?.user?.name}`}
-					className='w-10 md:w-14 lg:w-16 h-10 md:h-14 lg:h-16 flex justify-center items-center'>
+					href={`/user/${session?.user?.email}`}
+					className='w-9 md:w-14 lg:w-16 h-9 md:h-14 lg:h-16 flex justify-center items-center'>
 					{session ? (
 						<Image
 							src={session?.user?.image as string}
