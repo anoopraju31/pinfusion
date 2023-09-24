@@ -28,7 +28,7 @@ const ProfilePage = ({ params }: ProfilePageProps) => {
 
 	return (
 		<main className='py-10'>
-			<UserInfo userInfo={userInfo} />
+			{userInfo && <UserInfo userInfo={userInfo} />}
 		</main>
 	)
 }
