@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useSession } from 'next-auth/react'
 import { ImageUpload, InputField, UserTag } from '.'
 
 type FormType = {
@@ -17,7 +18,6 @@ const Form = () => {
 		destinationLink: '',
 		image: null,
 	})
-
 	const handleInputChange = (
 		fieldName: 'title' | 'description' | 'destinationLink' | 'image',
 		e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
