@@ -1,8 +1,9 @@
 'use client'
-import { UserInfo } from '@/app/components'
-import app from '@/app/firebase'
+
+import { useEffect, useState } from 'react'
 import { DocumentData, doc, getDoc, getFirestore } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
+import app from '@/app/firebase'
+import { UserInfo } from '@/app/components'
 
 type ProfilePageProps = {
 	params: {
@@ -26,8 +27,8 @@ const ProfilePage = ({ params }: ProfilePageProps) => {
 	}, [params, db])
 
 	return (
-		<main>
-			<UserInfo />
+		<main className='py-10'>
+			<UserInfo userInfo={userInfo} />
 		</main>
 	)
 }
