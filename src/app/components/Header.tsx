@@ -5,6 +5,9 @@ import Image from 'next/image'
 import { useSession, signIn } from 'next-auth/react'
 import { HiSearch, HiBell, HiChat } from 'react-icons/hi'
 import { Logo } from './'
+import { doc, getFirestore, setDoc } from 'firebase/firestore'
+import app from '../firebase'
+import { useEffect } from 'react'
 
 type NavLinkProps = {
 	title: string
@@ -44,6 +47,22 @@ const SearchBox = () => (
 
 const Header = () => {
 	const { data: session } = useSession()
+	const db = getFirestore(app)
+
+	useEffect(() => {
+		const saveUserInfo = async () => {
+			if (session?.user) {
+				await setDoc(doc(db, 'user', session.user.email as string), {
+					username: session.user.name,
+					email: session.user.email,
+					profile: session.user.image,
+				})
+			}
+		}
+
+		saveUserInfo()
+	}, [session, db])
+
 	return (
 		<header className='py-2 px-4 flex gap-3 md:gap-2 justify-between items-center'>
 			<Logo />
@@ -59,7 +78,7 @@ const Header = () => {
 				<HiBell className='text-2xl md:text-5xl text-gray-500 cursor-pointer' />
 				<HiChat className='text-2xl md:text-5xl text-gray-500 cursor-pointer' />
 				<Link
-					href={`/${session?.user?.name}`}
+					href={`/user/${session?.user?.name}`}
 					className='w-10 md:w-14 lg:w-16 h-10 md:h-14 lg:h-16 flex justify-center items-center'>
 					{session ? (
 						<Image
