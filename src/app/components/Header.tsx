@@ -1,13 +1,13 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSession, signIn } from 'next-auth/react'
+import { doc, getFirestore, setDoc } from 'firebase/firestore'
 import { HiSearch, HiBell, HiChat } from 'react-icons/hi'
 import { Logo } from './'
-import { doc, getFirestore, setDoc } from 'firebase/firestore'
 import app from '../firebase'
-import { useEffect } from 'react'
 
 type NavLinkProps = {
 	title: string
@@ -19,11 +19,11 @@ const NavLink = ({ title, link, isFilled }: NavLinkProps) => (
 	<li
 		className={`${
 			isFilled && 'bg-black'
-		} md:py-2 lg:p-3 md:px-4 lg:px-6 rounded-full h-fit hidden md:flex justify-center items-center`}>
+		} md:py-2 lg:p-3 md:px-4 lg:px-6 rounded-full h-fit flex justify-center items-center`}>
 		<Link
 			className={`${
 				isFilled ? 'text-white' : 'text-black'
-			} text-xl leading-none font-medium`}
+			} md:text-lg lg:text-xl leading-none font-medium`}
 			href={link}>
 			{' '}
 			{title}{' '}
@@ -39,7 +39,7 @@ const SearchBox = () => (
 			<input
 				type='text'
 				placeholder='Search'
-				className='bg-transparent outline-none w-full min-w-[150px] text-xl'
+				className='bg-transparent outline-none w-full text-xl'
 			/>
 		</div>
 	</>
@@ -67,8 +67,8 @@ const Header = () => {
 		<header className='py-2 px-4 flex gap-3 md:gap-6 justify-between items-center'>
 			<Logo />
 
-			<nav className='flex-1 flex gap-3 items-center justify-end'>
-				<ul className='flex gap-1 lg:gap-2'>
+			<nav className='flex-1 flex gap-4 items-center justify-end'>
+				<ul className='hidden md:flex lg:gap-2'>
 					<NavLink title='Home' link='/' isFilled />
 					<NavLink title='Explore' link='/explore' />
 					<NavLink title='Create' link='/create' />
@@ -90,9 +90,9 @@ const Header = () => {
 						/>
 					) : (
 						<button
-							className='p-2 px-4 font-semibold rounded-full'
+							className='px-2 py-1 font-medium text-sm rounded-full text-white bg-red-600 whitespace-nowrap'
 							onClick={() => signIn()}>
-							Login
+							Sign In
 						</button>
 					)}
 				</Link>
