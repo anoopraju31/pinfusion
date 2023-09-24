@@ -5,9 +5,9 @@ const Logo = () => {
 	return (
 		<Link href='/'>
 			<svg
-				className='hover:bg-gray-300 fill-red-600 w-12 h-12 rounded-full cursor-pointer'
-				height='24'
-				width='24'
+				className='hover:bg-gray-300 fill-red-600 w-9 h-9 rounded-full cursor-pointer'
+				height='20'
+				width='20'
 				viewBox='0 0 24 24'
 				aria-hidden='true'
 				aria-label=''
