@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageUpload } from '.'
+import { ImageUpload, InputField } from '.'
 
 const Form = () => {
 	return (
@@ -11,6 +11,9 @@ const Form = () => {
 				<ImageUpload />
 
 				{/* User Inputs */}
+				<div className='col-span-2'>
+					<InputField />
+				</div>
 			</form>
 		</section>
 	)
