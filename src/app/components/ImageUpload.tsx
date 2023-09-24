@@ -14,9 +14,10 @@ const ImageUpload = () => {
 		setSelectedFile(files[0])
 	}
 	return (
-		<div className={`${selectedFile ? ' h-auto' : 'h-[450px]'} rounded-lg`}>
+		<div
+			className={`w-full ${selectedFile ? ' h-auto' : 'h-[450px]'} rounded-lg`}>
 			{selectedFile ? (
-				<div className='relative bg-slate-500 transition-all duration-300'>
+				<div className='w-full relative bg-slate-500 transition-all duration-300'>
 					<div
 						className='group absolute bottom-1/3 left-1 w-10 h-10 rounded-full bg-white flex justify-center items-center cursor-pointer'
 						onClick={() => setSelectedFile(null)}>
@@ -36,12 +37,12 @@ const ImageUpload = () => {
 			) : (
 				<label
 					htmlFor='image-file-input'
-					className={`m-5 flex flex-col justify-center items-center cursor-pointer h-[90%] ${
+					className={`md:m-5 flex flex-col justify-center items-center cursor-pointer h-[90%] ${
 						selectedFile
 							? ''
 							: 'border-[2px] border-gray-300 border-dashed rounded-lg text-gray-600 transition-all duration-300'
 					}`}>
-					<div className='flex items-center flex-col'>
+					<div className='w-full flex items-center flex-col'>
 						<HiArrowUpCircle className='text-3xl' />
 						<h2 className='mt-2 text-sm text-black font-semibold'>
 							Click to Upload

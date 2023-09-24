@@ -30,36 +30,45 @@ const Form = () => {
 	}
 
 	return (
-		<section className='p-16 bg-white rounded-2xl'>
+		<section className='p-6 md:p-16 bg-white md:rounded-2xl'>
 			{/* Loading */}
+			<div className='mb-6 flex justify-end'>
+				<button className='py-2.5 px-4 bg-red-600 rounded-xl text-white'>
+					save
+				</button>
+			</div>
 
-			<form className='grid grid-cols-1 lg:grid-cols-3 gap-10'>
+			<form className='grid grid-cols-1 lg:grid-cols-3 lg:gap-10'>
 				{/* Image Upload */}
 				<ImageUpload />
 
 				{/* User Inputs */}
 				<div className='col-span-2'>
 					<InputField
-						labelName='Pin Title'
+						labelName='title'
 						id='title'
 						placeholder='Add you title'
 						inputType='text'
 						value={form.title}
 						handleChange={(e) => handleInputChange('title', e)}
-						styles='text-5xl font-extrabold'
+						styles='text-2xl md:text-3xl lg:text-5xl font-extrabold'
+						qoutes='Your first 40 characters are what usually show up in feed'
+						idealNumberOfCharacters={100}
 					/>
 
 					<UserTag />
 
 					<InputField
-						labelName='Description'
+						labelName='description'
 						id='description'
 						placeholder='Tell everyone what your pin is about'
 						isTextArea
 						value={form.description}
-						row={5}
+						row={2}
 						handleChange={(e) => handleInputChange('description', e)}
 						styles='text-base max-h-24 overflow-auto !font-normal placeholder:font-medium'
+						qoutes='People usually see the first 50 characters when they click on your pin'
+						idealNumberOfCharacters={500}
 					/>
 
 					<InputField
