@@ -1,13 +1,20 @@
-import { DocumentData } from 'firebase/firestore'
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import { useSession, signOut } from 'next-auth/react'
+import { DocumentData } from 'firebase/firestore'
 
 type UserInfoType = {
 	userInfo: DocumentData | null
 }
 
 const UserInfo = ({ userInfo }: UserInfoType) => {
+	const { data: session } = useSession()
+	const handleLogout = () => {
+		signOut({ callbackUrl: 'http://localhost:3000/' })
+	}
+
 	if (userInfo)
 		return (
 			<section className='w-full flex flex-col items-center'>
@@ -27,11 +34,22 @@ const UserInfo = ({ userInfo }: UserInfoType) => {
 						className='mt-5 py-2 px-4 bg-gray-300 font-semibold rounded-full'>
 						Share
 					</Link>
-					<Link
-						href='/'
-						className='mt-5 py-2 px-4 bg-gray-300 font-semibold rounded-full'>
-						Edit Profile
-					</Link>
+					{session && session?.user?.email === userInfo?.email && (
+						<Link
+							href='/'
+							className='mt-5 py-2 px-4 bg-gray-300 font-semibold rounded-full'>
+							Edit Profile
+						</Link>
+					)}
+					{session && session?.user?.email === userInfo?.email && (
+						<button
+							type='button'
+							onClick={handleLogout}
+							className='mt-5 py-2 px-4 bg-gray-300 font-semibold rounded-full'>
+							{' '}
+							Logout{' '}
+						</button>
+					)}
 				</div>
 			</section>
 		)
