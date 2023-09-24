@@ -5,14 +5,20 @@ import React, { useState } from 'react'
 import { HiArrowUpCircle } from 'react-icons/hi2'
 import { FaTrash } from 'react-icons/fa'
 
-const ImageUpload = () => {
+type ImageUploadProps = {
+	handleImageChange: React.Dispatch<React.SetStateAction<FormType>>
+}
+
+const ImageUpload = ({ handleImageChange }: ImageUploadProps) => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const target = e.target as HTMLInputElement
 		const files = Array.from(target.files as FileList)
 		setSelectedFile(files[0])
+		handleImageChange((prev) => ({ ...prev, image: files[0] }))
 	}
+
 	return (
 		<div
 			className={`w-full ${selectedFile ? ' h-auto' : 'h-[450px]'} rounded-lg`}>
