@@ -1,4 +1,5 @@
 'use client'
+import { UserInfo } from '@/app/components'
 import app from '@/app/firebase'
 import { DocumentData, doc, getDoc, getFirestore } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
@@ -24,7 +25,11 @@ const ProfilePage = ({ params }: ProfilePageProps) => {
 		if (params) getUserInfo(params.userId.replace('%40', '@'))
 	}, [params, db])
 
-	return <div>ProfilePage</div>
+	return (
+		<main>
+			<UserInfo />
+		</main>
+	)
 }
 
 export default ProfilePage
