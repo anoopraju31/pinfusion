@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ImageUpload, InputField } from '.'
+import { ImageUpload, InputField, UserTag } from '.'
 
 type FormType = {
 	title: string
@@ -48,6 +48,8 @@ const Form = () => {
 						handleChange={(e) => handleInputChange('title', e)}
 						styles='text-5xl font-extrabold'
 					/>
+
+					<UserTag />
 
 					<InputField
 						labelName='Description'
