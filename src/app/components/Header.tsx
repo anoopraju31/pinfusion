@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useSession, signIn } from 'next-auth/react'
 import { doc, getFirestore, setDoc } from 'firebase/firestore'
 import { HiSearch, HiBell, HiChat } from 'react-icons/hi'
@@ -13,23 +14,43 @@ type NavLinkProps = {
 	title: string
 	link: string
 	isFilled?: boolean
+	isAuthLink?: boolean
 }
 
-const NavLink = ({ title, link, isFilled }: NavLinkProps) => (
-	<li
-		className={`${
-			isFilled && 'bg-black'
-		} md:py-2 lg:p-3 md:px-4 lg:px-6 rounded-full h-fit flex justify-center items-center`}>
-		<Link
+const NavLink = ({ title, link, isFilled, isAuthLink }: NavLinkProps) => {
+	const router = useRouter()
+	const { data: session } = useSession()
+	const handleClick = () => {
+		if (session?.user) router.push('/create')
+		else signIn('google', { callbackUrl: 'http://localhost:3000/create' })
+	}
+	return (
+		<li
 			className={`${
-				isFilled ? 'text-white' : 'text-black'
-			} md:text-lg lg:text-xl leading-none font-medium`}
-			href={link}>
-			{' '}
-			{title}{' '}
-		</Link>
-	</li>
-)
+				isFilled && 'bg-black'
+			} md:py-2 lg:p-3 md:px-4 lg:px-6 rounded-full h-fit flex justify-center items-center`}>
+			{isAuthLink ? (
+				<button
+					className={`${
+						isFilled ? 'text-white' : 'text-black'
+					} md:text-lg lg:text-xl leading-none font-medium`}
+					onClick={handleClick}>
+					{' '}
+					{title}{' '}
+				</button>
+			) : (
+				<Link
+					className={`${
+						isFilled ? 'text-white' : 'text-black'
+					} md:text-lg lg:text-xl leading-none font-medium`}
+					href={link}>
+					{' '}
+					{title}{' '}
+				</Link>
+			)}
+		</li>
+	)
+}
 
 const SearchBox = () => (
 	<>
@@ -71,7 +92,7 @@ const Header = () => {
 				<ul className='hidden md:flex lg:gap-2'>
 					<NavLink title='Home' link='/' isFilled />
 					<NavLink title='Explore' link='/explore' />
-					<NavLink title='Create' link='/create' />
+					<NavLink title='Create' link='/create' isAuthLink />
 				</ul>
 
 				<SearchBox />

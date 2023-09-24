@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
+import { useSession, signIn } from 'next-auth/react'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { doc, getFirestore, setDoc } from 'firebase/firestore'
 import { ImSpinner6 } from 'react-icons/im'
