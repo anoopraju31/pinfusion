@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
+import Image from 'next/image'
+import { useSession, signIn } from 'next-auth/react'
 import { HiSearch, HiBell, HiChat } from 'react-icons/hi'
 import { Logo } from './'
-import Image from 'next/image'
 
 type NavLinkProps = {
 	title: string
@@ -40,6 +43,7 @@ const SearchBox = () => (
 )
 
 const Header = () => {
+	const { data: session } = useSession()
 	return (
 		<header className='py-2 px-4 flex gap-3 md:gap-2 justify-between items-center'>
 			<Logo />
@@ -55,15 +59,23 @@ const Header = () => {
 				<HiBell className='text-2xl md:text-5xl text-gray-500 cursor-pointer' />
 				<HiChat className='text-2xl md:text-5xl text-gray-500 cursor-pointer' />
 				<Link
-					href='/'
+					href={`/${session?.user?.name}`}
 					className='w-10 md:w-14 lg:w-16 h-10 md:h-14 lg:h-16 flex justify-center items-center'>
-					<Image
-						src='/man.png'
-						alt='user-profile'
-						width={60}
-						height={60}
-						className='hover:bg-gray-300 rounded-full cursor-pointer object-cover'
-					/>
+					{session ? (
+						<Image
+							src={session?.user?.image as string}
+							alt='user-profile'
+							width={60}
+							height={60}
+							className='hover:bg-gray-300 rounded-full cursor-pointer object-cover'
+						/>
+					) : (
+						<button
+							className='p-2 px-4 font-semibold rounded-full'
+							onClick={() => signIn()}>
+							Login
+						</button>
+					)}
 				</Link>
 			</nav>
 		</header>
