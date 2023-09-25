@@ -1,9 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { DocumentData, doc, getDoc, getFirestore } from 'firebase/firestore'
+import {
+	DocumentData,
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	getFirestore,
+	query,
+	where,
+} from 'firebase/firestore'
 import app from '@/app/firebase'
-import { UserInfo } from '@/app/components'
+import { PinsList, UserInfo } from '@/app/components'
 
 type ProfilePageProps = {
 	params: {
@@ -13,6 +22,7 @@ type ProfilePageProps = {
 
 const ProfilePage = ({ params }: ProfilePageProps) => {
 	const [userInfo, setUserInfo] = useState<DocumentData | null>(null)
+	const [userPins, setUserPins] = useState<DocumentData[]>([])
 	const db = getFirestore(app)
 
 	useEffect(() => {
@@ -20,7 +30,19 @@ const ProfilePage = ({ params }: ProfilePageProps) => {
 			const userRef = doc(db, 'user', email)
 			const userSnap = await getDoc(userRef)
 
-			setUserInfo(userSnap.exists() ? userSnap.data() : null)
+			if (userSnap.exists()) {
+				const user = userSnap.data()
+				setUserInfo(user)
+				const postsQuery = query(
+					collection(db, 'posts'),
+					where('email', '==', user?.email),
+				)
+				const querySnapshot = await getDocs(postsQuery)
+
+				querySnapshot.forEach((doc) => {
+					setUserPins((prev) => [...prev, doc.data()])
+				})
+			} else setUserInfo(null)
 		}
 
 		if (params) getUserInfo(params.userId.replace('%40', '@'))
@@ -29,6 +51,8 @@ const ProfilePage = ({ params }: ProfilePageProps) => {
 	return (
 		<main className='py-10'>
 			{userInfo && <UserInfo userInfo={userInfo} />}
+
+			<PinsList />
 		</main>
 	)
 }
