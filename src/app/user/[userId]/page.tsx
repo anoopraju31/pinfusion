@@ -50,9 +50,11 @@ const ProfilePage = ({ params }: ProfilePageProps) => {
 
 	return (
 		<main className='py-10'>
+			{/* User Info */}
 			{userInfo && <UserInfo userInfo={userInfo} />}
 
-			<PinsList />
+			{/* User Pins */}
+			{userInfo && <PinsList pins={userPins} />}
 		</main>
 	)
 }
