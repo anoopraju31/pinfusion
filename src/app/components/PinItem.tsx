@@ -11,7 +11,7 @@ type PinItemType = {
 const PinItem = ({ pin }: PinItemType) => {
 	return (
 		<div className=''>
-			<Link href='/'>
+			<Link href={`/pins/${pin.id}`}>
 				<div className='group relative cursor-pointer'>
 					{/* Pin Image */}
 					<Image

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { DocumentData, doc, getDoc, getFirestore } from 'firebase/firestore'
 import { HiArrowSmallLeft } from 'react-icons/hi2'
 import app from '@/app/firebase'
-import { PinImage, UserTag } from '@/app/components'
+import { UserTag } from '@/app/components'
 import Image from 'next/image'
 
 type PinDetailsPageProps = {
