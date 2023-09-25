@@ -38,10 +38,15 @@ const ProfilePage = ({ params }: ProfilePageProps) => {
 					where('email', '==', user?.email),
 				)
 				const querySnapshot = await getDocs(postsQuery)
+				console.log(querySnapshot)
+
+				let pins: DocumentData[] = []
 
 				querySnapshot.forEach((doc) => {
-					setUserPins((prev) => [...prev, doc.data()])
+					pins.push(doc.data())
 				})
+
+				setUserPins(pins)
 			} else setUserInfo(null)
 		}
 
