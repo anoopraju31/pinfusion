@@ -1,3 +1,6 @@
+'use client'
+
+import { useSession } from 'next-auth/react'
 import { DocumentData } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,6 +12,8 @@ type PinItemType = {
 }
 
 const PinItem = ({ pin }: PinItemType) => {
+	const { data: session } = useSession()
+	const handleSave = async () => {}
 	return (
 		<div className=''>
 			<Link href={`/pins/${pin.id}`}>
@@ -21,10 +26,15 @@ const PinItem = ({ pin }: PinItemType) => {
 						height={500}
 						className='rounded-3xl cursor-pointer relative z-0'
 					/>
+
 					{/* Save Button */}
-					<button className='absolute top-3 right-3 hidden group-hover:block px-2 py-1 font-medium text-sm rounded-full text-white bg-red-600 whitespace-nowrap'>
-						Save
-					</button>
+					{session !== null && (
+						<button
+							onClick={handleSave}
+							className='absolute top-3 right-3 hidden group-hover:block p-2 font-medium text-sm rounded-full text-white bg-red-600 whitespace-nowrap'>
+							Save
+						</button>
+					)}
 
 					<div className='absolute bottom-3 right-3 hidden group-hover:flex items-center justify-end gap-2'>
 						{/* Destination Link */}
